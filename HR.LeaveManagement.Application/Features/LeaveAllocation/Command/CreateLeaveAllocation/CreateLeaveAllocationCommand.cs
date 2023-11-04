@@ -9,6 +9,8 @@ namespace HR.LeaveManagement.Application.Features.LeaveAllocation.Command.Create
 {
     public class CreateLeaveAllocationCommand : IRequest<Unit>
     {
+        //public string Name { get; set; } = String.Empty;
+        //public int DefaultDays { get; set; }
         public int LeaveTypeID { get; set; }
     }
 }

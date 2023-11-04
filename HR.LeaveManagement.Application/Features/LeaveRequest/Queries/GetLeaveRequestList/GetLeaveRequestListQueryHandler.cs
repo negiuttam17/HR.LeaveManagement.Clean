@@ -29,6 +29,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Queries.GetLeaveR
             var requests = _mapper.Map<List<LeaveRequestListDto>>(leaveRequest);
 
             // Fill requests with employee information
+
             return requests;
         }
     }

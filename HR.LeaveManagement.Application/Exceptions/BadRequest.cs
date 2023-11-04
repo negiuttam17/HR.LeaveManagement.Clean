@@ -9,15 +9,11 @@ public class BadRequestException : Exception
 
     }
 
+
     public BadRequestException(string message, ValidationResult validationResult) : base(message)
     {
-        ValidatitionErrors = new();
-        foreach (var error in validationResult.Errors)
-        {
-            ValidatitionErrors.Add(error.ErrorMessage);
-        }
-
+        ValidationErrors = validationResult.ToDictionary();
     }
 
-    public List<string> ValidatitionErrors { get; set; }
+    public IDictionary<string, string[]> ValidationErrors { get; set; }
 }
