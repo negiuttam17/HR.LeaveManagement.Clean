@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{70D3C849-D56
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{A28CF980-B520-424C-BAE1-11CEBA99D74E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{2C9D1CBE-A5E4-47B6-9A94-0FD2B98653E3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{2B82CFA3-DD74-47BF-80C2-CD8B6710B7F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HR.LeaveManagement.Domain", "HR.LeaveManagement.Domain\HR.LeaveManagement.Domain.csproj", "{885A15D9-45FF-48B0-897E-E7BA9DDC0D9C}"
@@ -25,9 +23,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HR.LeaveManagement.Infrastr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HR.LeaveManagement.API", "HR.LeaveManagement.API\HR.LeaveManagement.API.csproj", "{4EB1A30E-63D0-4A12-BE5E-99A16FBC3731}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR.LeaveManagement.Application.UnitTests", "HR.LEaveManagement.Application.UnitTests\HR.LeaveManagement.Application.UnitTests.csproj", "{842C7BC4-0CF9-4BCC-B275-46D3A39B981D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HR.LeaveManagement.Application.UnitTests", "HR.LEaveManagement.Application.UnitTests\HR.LeaveManagement.Application.UnitTests.csproj", "{842C7BC4-0CF9-4BCC-B275-46D3A39B981D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR.LeaveManagement.Application.IntegrationTest", "HR.LeaveManagement.Application.IntegrationTest\HR.LeaveManagement.Application.IntegrationTest.csproj", "{6FA92394-4ABB-4849-AF5D-B9608DD1EFCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HR.LeaveManagement.Application.IntegrationTest", "HR.LeaveManagement.Application.IntegrationTest\HR.LeaveManagement.Application.IntegrationTest.csproj", "{6FA92394-4ABB-4849-AF5D-B9608DD1EFCA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{E4DFF1AA-502F-4E39-827C-9DA6A2919BE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR.LeaveManagement.BlazorUI", "HR.LeaveManagement.BlazorUI\HR.LeaveManagement.BlazorUI.csproj", "{10CF41AE-73C9-4FFD-9F71-D8C1558A7DFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,13 +65,16 @@ Global
 		{6FA92394-4ABB-4849-AF5D-B9608DD1EFCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FA92394-4ABB-4849-AF5D-B9608DD1EFCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FA92394-4ABB-4849-AF5D-B9608DD1EFCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10CF41AE-73C9-4FFD-9F71-D8C1558A7DFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10CF41AE-73C9-4FFD-9F71-D8C1558A7DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10CF41AE-73C9-4FFD-9F71-D8C1558A7DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10CF41AE-73C9-4FFD-9F71-D8C1558A7DFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A28CF980-B520-424C-BAE1-11CEBA99D74E} = {70D3C849-D56D-465F-B894-B96308C0E1F0}
-		{2C9D1CBE-A5E4-47B6-9A94-0FD2B98653E3} = {70D3C849-D56D-465F-B894-B96308C0E1F0}
 		{2B82CFA3-DD74-47BF-80C2-CD8B6710B7F2} = {70D3C849-D56D-465F-B894-B96308C0E1F0}
 		{885A15D9-45FF-48B0-897E-E7BA9DDC0D9C} = {A28CF980-B520-424C-BAE1-11CEBA99D74E}
 		{7B1A37C1-50A9-4B53-9AAE-A33E00B52D0C} = {A28CF980-B520-424C-BAE1-11CEBA99D74E}
@@ -79,6 +84,8 @@ Global
 		{4EB1A30E-63D0-4A12-BE5E-99A16FBC3731} = {2B82CFA3-DD74-47BF-80C2-CD8B6710B7F2}
 		{842C7BC4-0CF9-4BCC-B275-46D3A39B981D} = {A8E81E42-AE82-412F-85C1-53CE62317AEE}
 		{6FA92394-4ABB-4849-AF5D-B9608DD1EFCA} = {A8E81E42-AE82-412F-85C1-53CE62317AEE}
+		{E4DFF1AA-502F-4E39-827C-9DA6A2919BE8} = {70D3C849-D56D-465F-B894-B96308C0E1F0}
+		{10CF41AE-73C9-4FFD-9F71-D8C1558A7DFA} = {E4DFF1AA-502F-4E39-827C-9DA6A2919BE8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19805D65-269F-4F9A-A605-7A60585925AE}
