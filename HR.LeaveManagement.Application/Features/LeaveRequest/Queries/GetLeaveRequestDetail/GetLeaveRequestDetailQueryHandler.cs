@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using HR.LeaveManagement.Application.Contracts.Identity;
 using HR.LeaveManagement.Application.Contracts.Persistence;
+using HR.LeaveManagement.Application.Exceptions;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,12 +14,14 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Queries.GetLeaveR
     public class GetLeaveRequestDetailQueryHandler : IRequestHandler<GetLeaveRequestDetailQuery, LeaveRequestDetailsDto>
     {
         private readonly IMapper _mapper;
+        private readonly IUserService _userService;
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         public GetLeaveRequestDetailQueryHandler(ILeaveRequestRepository leaveRequestRepository,
-            IMapper mapper)
+            IMapper mapper, IUserService userService)
         {
-            this._mapper = mapper;
-            this._leaveRequestRepository = leaveRequestRepository;
+            _mapper = mapper;
+            this._userService = userService;
+            _leaveRequestRepository = leaveRequestRepository;
         }
 
         public async Task<LeaveRequestDetailsDto> Handle(GetLeaveRequestDetailQuery request, 
@@ -26,7 +30,12 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Queries.GetLeaveR
             var leaveRequest = _mapper.Map<LeaveRequestDetailsDto>(await _leaveRequestRepository
                 .GetLeaveRequestWithDetails(request.Id));
 
+            if(leaveRequest == null)
+                throw new NotFoundException(nameof(leaveRequest), request.Id);
+
             //Add Employee details as needed
+            leaveRequest.Employee = await _userService.GetEmployee(leaveRequest.RequestingEmployeeId);
+
             return leaveRequest;
         }
     }

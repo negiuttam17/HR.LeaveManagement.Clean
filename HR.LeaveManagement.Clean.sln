@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HR.LeaveManagement.Applicat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{E4DFF1AA-502F-4E39-827C-9DA6A2919BE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR.LeaveManagement.BlazorUI", "HR.LeaveManagement.BlazorUI\HR.LeaveManagement.BlazorUI.csproj", "{10CF41AE-73C9-4FFD-9F71-D8C1558A7DFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HR.LeaveManagement.BlazorUI", "HR.LeaveManagement.BlazorUI\HR.LeaveManagement.BlazorUI.csproj", "{10CF41AE-73C9-4FFD-9F71-D8C1558A7DFA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HR.LeaveManagement.Identity", "HR.LeaveMAnagement.Identity\HR.LeaveManagement.Identity.csproj", "{A12E312A-C57D-47B8-9636-052C7824789C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{10CF41AE-73C9-4FFD-9F71-D8C1558A7DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10CF41AE-73C9-4FFD-9F71-D8C1558A7DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10CF41AE-73C9-4FFD-9F71-D8C1558A7DFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A12E312A-C57D-47B8-9636-052C7824789C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A12E312A-C57D-47B8-9636-052C7824789C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A12E312A-C57D-47B8-9636-052C7824789C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A12E312A-C57D-47B8-9636-052C7824789C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +92,7 @@ Global
 		{6FA92394-4ABB-4849-AF5D-B9608DD1EFCA} = {A8E81E42-AE82-412F-85C1-53CE62317AEE}
 		{E4DFF1AA-502F-4E39-827C-9DA6A2919BE8} = {70D3C849-D56D-465F-B894-B96308C0E1F0}
 		{10CF41AE-73C9-4FFD-9F71-D8C1558A7DFA} = {E4DFF1AA-502F-4E39-827C-9DA6A2919BE8}
+		{A12E312A-C57D-47B8-9636-052C7824789C} = {A2B99F49-7770-4E38-9E8F-A727C841E39C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19805D65-269F-4F9A-A605-7A60585925AE}

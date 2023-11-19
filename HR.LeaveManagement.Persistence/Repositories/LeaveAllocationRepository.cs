@@ -14,14 +14,15 @@ namespace HR.LeaveManagement.Persistence.Repositories
 
         public async Task AddAllocation(List<LeaveAllocation> allocation)
         {
-            await _context.AddRangeAsync(allocation);   
+            await _context.AddRangeAsync(allocation);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<bool> AllocationExists(string userId, int leaveTypeId, int period)
         {
             return await _context.LeaveAllocations.AnyAsync(q => q.EmployeeId == userId
-            && q.LeaveTypeID == leaveTypeId
-            && q.Period == period);
+                                    && q.LeaveTypeID == leaveTypeId
+                                    && q.Period == period);
         }
 
         public async Task<LeaveAllocation> GetLeaveAllocationWithDetails(int id)

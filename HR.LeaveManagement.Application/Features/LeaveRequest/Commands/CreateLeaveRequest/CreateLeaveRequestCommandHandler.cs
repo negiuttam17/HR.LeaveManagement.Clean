@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HR.LeaveManagement.Application.Contracts.Email;
+using HR.LeaveManagement.Application.Contracts.Identity;
 using HR.LeaveManagement.Application.Contracts.Logging;
 using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Application.Exceptions;
@@ -19,19 +20,25 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Command.CreateLea
         private readonly IEmailSender _emailSender;
         private readonly IMapper _mapper;
         private readonly ILeaveRequestRepository _leaveRequestRepository;
+        private readonly ILeaveAllocationRepository _leaveAllocationRepository;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
         private readonly IAppLogger<CreateLeaveRequestCommandHandler> _applogger;
+        private readonly IUserService _userService;
 
         public CreateLeaveRequestCommandHandler(IEmailSender emailSender, IMapper mapper,
             ILeaveTypeRepository leaveTypeRepository, ILeaveRequestRepository leaveRequestRepository,
-            IAppLogger<CreateLeaveRequestCommandHandler> logger)
+            ILeaveAllocationRepository leaveAllocationRepository,
+            IAppLogger<CreateLeaveRequestCommandHandler> logger,
+            IUserService userService)
         {
-            this._emailSender = emailSender;
-            this._mapper = mapper;
+            _emailSender = emailSender;
+            _mapper = mapper;
             this._leaveRequestRepository = leaveRequestRepository;
+            this._leaveAllocationRepository = leaveAllocationRepository;
             this._leaveTypeRepository = leaveTypeRepository;
             this._applogger = logger;
-    }
+            this._userService = userService;
+        }
 
         public async Task<Unit> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
         {
@@ -41,14 +48,31 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Command.CreateLea
             if (validationResult.Errors.Any())
                 throw new BadRequestException("Invalid Leave Request", validationResult);
 
-            //GEt Requesting employee id
+            //Get Requesting employee id
+            var employeeId = _userService.UserId;
 
             // check on employee's allocation
-
+            var allocation = await _leaveAllocationRepository.GetUserAllocations(employeeId, request.LeaveTypeID);
             // if allocations aren't enough, return validation error with message
+            if (allocation == null)
+            {
+                validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(nameof(request.LeaveTypeID),
+                    "You do not have any allocation for this leave type."));
+                throw new BadRequestException("Invalid Leave Request", validationResult);
+            }
+
+            int daysRequested = (int)(request.EndDate - request.StartDate).TotalDays;
+            if (daysRequested > allocation.NumberofDays)
+            {
+                validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(
+                    nameof(request.EndDate), "You do not have enough days for this request"));
+                throw new BadRequestException("Invalid Leave Request", validationResult);
+            }
 
             //Create Leave Request
             var leaveRequest = _mapper.Map<Domain.LeaveRequest>(request);
+            leaveRequest.RequestingEmployeeId = employeeId;
+            leaveRequest.DateRequested = DateTime.Now;
             await _leaveRequestRepository.CreateAsync(leaveRequest);
 
             //send email confirmation

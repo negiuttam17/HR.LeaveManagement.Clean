@@ -15,6 +15,8 @@ namespace HR.LeaveManagement.Application.IntegrationTest
             var dbOptions = new DbContextOptionsBuilder<HrDatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
 
+            
+
             _hrDatabaseContext = new HrDatabaseContext(dbOptions);
         }
         [Fact]
