@@ -3,7 +3,9 @@
 <h3>Leave Types</h3>
 
 <div class="m-2 d-flex justify-content-end">
-    <button @onclick="CreateLeaveType" class="btn btn-success">Add Leave Type</button>
+    <AuthorizeView Roles="Administrator">
+        <button @onclick="CreateLeaveType" class="btn btn-success">Add Leave Type</button>
+    </AuthorizeView>
 </div>
 
 @if (string.IsNullOrEmpty(Message) == false)

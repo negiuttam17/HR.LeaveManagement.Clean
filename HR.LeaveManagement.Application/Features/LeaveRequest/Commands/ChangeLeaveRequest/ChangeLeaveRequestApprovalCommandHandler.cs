@@ -17,16 +17,18 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Command.ChangeLea
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
+        private readonly ILeaveAllocationRepository _leaveAllocationRepository;
         private readonly IMapper _mapper;
         private readonly IEmailSender _emailSender;
         private readonly IAppLogger<ChangeLeaveRequestApprovalCommand> _appLogger;
 
         public ChangeLeaveRequestApprovalCommandHandler(ILeaveRequestRepository leaveRequestRepository,
-            ILeaveTypeRepository leaveTypeRepository, IMapper mapper, IEmailSender emailSender,
+            ILeaveTypeRepository leaveTypeRepository, ILeaveAllocationRepository leaveAllocationRepository,IMapper mapper, IEmailSender emailSender,
             IAppLogger<ChangeLeaveRequestApprovalCommand> appLogger)
         {
             this._leaveRequestRepository = leaveRequestRepository;
             this._leaveTypeRepository = leaveTypeRepository;
+            this._leaveAllocationRepository = leaveAllocationRepository;
             this._mapper = mapper;
             this._emailSender = emailSender;
             this._appLogger = appLogger;
@@ -43,6 +45,14 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Command.ChangeLea
 
             //If request is approved, get and update the employee's allocation
 
+            if(request.Approved)
+            {
+                int daysRequested = (int)(leaveRequest.EndDate - leaveRequest.StartDate).TotalDays;
+                var allocation = await _leaveAllocationRepository.GetUserAllocations(leaveRequest.RequestingEmployeeId, leaveRequest.LeaveTypeId);
+                allocation.NumberofDays -= daysRequested;
+
+                await _leaveAllocationRepository.UpdateAsync(allocation);
+            }
             //send email confirmatoin
 
             try
@@ -63,8 +73,6 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Command.ChangeLea
             }
 
             return Unit.Value;
-
-
         }
     }
 }

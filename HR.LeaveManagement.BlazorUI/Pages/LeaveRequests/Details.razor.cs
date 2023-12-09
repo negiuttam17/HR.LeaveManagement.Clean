@@ -39,8 +39,6 @@ namespace HR.LeaveManagement.BlazorUI.Pages.LeaveRequests
 
         protected override async Task OnInitializedAsync()
         {
-            Model = await leaveRequestService.GetLeaveRequest(id);
-
             if (Model.Approved == null)
             {
                 ClassName = "warning";

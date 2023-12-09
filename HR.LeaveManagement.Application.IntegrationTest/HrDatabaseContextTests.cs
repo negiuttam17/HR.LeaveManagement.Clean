@@ -1,4 +1,6 @@
+using HR.LeaveManagement.Application.Contracts.Identity;
 using HR.LeaveManagement.Domain;
+using HR.LeaveManagement.Identity.Models;
 using HR.LeaveManagement.Persistence.DataBaseContext;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
@@ -8,16 +10,16 @@ namespace HR.LeaveManagement.Application.IntegrationTest
 {
     public class HrDatabaseContextTests
     {
+        private readonly IUserService userService;
         private HrDatabaseContext _hrDatabaseContext;
 
-        public HrDatabaseContextTests()
+        public HrDatabaseContextTests(IUserService userService)
         {
             var dbOptions = new DbContextOptionsBuilder<HrDatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
-
+            this.userService = userService;
+            _hrDatabaseContext = new HrDatabaseContext(dbOptions, userService);
             
-
-            _hrDatabaseContext = new HrDatabaseContext(dbOptions);
         }
         [Fact]
         public async void Save_SetDateCreatedValue()

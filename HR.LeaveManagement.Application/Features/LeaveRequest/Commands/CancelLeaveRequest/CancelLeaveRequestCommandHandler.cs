@@ -15,14 +15,17 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Command.CalcelLea
     public class CancelLeaveRequestCommandHandler : IRequestHandler<CancelLeaveRequestCommand, Unit>
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
+        private readonly ILeaveAllocationRepository _leaveAllocationRepository;
         private readonly IAppLogger<CancelLeaveRequestCommandHandler> _appLogger;
         private readonly IEmailSender _emailSender;
 
         public CancelLeaveRequestCommandHandler(ILeaveRequestRepository leaveRequestRepository,
+            ILeaveAllocationRepository leaveAllocationRepository,
             IAppLogger<CancelLeaveRequestCommandHandler> Logger,
             IEmailSender emailSender)
         {
             this._leaveRequestRepository = leaveRequestRepository;
+            this._leaveAllocationRepository = leaveAllocationRepository;
             this._appLogger = Logger;
             this._emailSender = emailSender;
         }
@@ -36,9 +39,19 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Command.CalcelLea
                 throw new NotFoundException(nameof(leaveRequest), request.Id);
 
             leaveRequest.Cancelled = true;
+            await _leaveRequestRepository.UpdateAsync(leaveRequest);
 
-            //Re-eveluate the employee's allocation for the leave type
+            //If already approved, Re-eveluate the employee's allocation for the leave type
+            if (leaveRequest.Approved == true)
+            {
+                int daysRequested = (int)(leaveRequest.EndDate - leaveRequest.StartDate).TotalDays;
+                var allocation = await _leaveAllocationRepository.GetUserAllocations(leaveRequest.RequestingEmployeeId, leaveRequest.LeaveTypeId);
+                allocation.NumberofDays += daysRequested;
 
+                await _leaveAllocationRepository.UpdateAsync(allocation);
+            }
+
+            
             //send confirmation email
             try
             {
